@@ -20,7 +20,6 @@ import javax.lang.model.element.VariableElement;
 import javax.lang.model.util.ElementFilter;
 import javax.tools.Diagnostic;
 
-import cn.campusapp.updater.OmitNull;
 import cn.campusapp.updater.Skip;
 import cn.campusapp.updater.Updatable;
 
@@ -94,9 +93,10 @@ public class UpdaterProcessor extends AbstractProcessor {
                 }
                 final Set<Modifier> fieldModifiers = field.getModifiers();
                 /**
-                 * If this field is annotated with {@link OmitNull}, it will not receive a null value
+                 * If this field is not annotated with android.support.annotation.Nullable, it will not receive a null value
                  */
-                final boolean omitNull = field.getAnnotation(OmitNull.class) != null;
+                final boolean omitNull = !ElementUtil.isAnnotationPresent(field, "android.support.annotation.Nullable");
+
                 ExecutableElement[] getterSetter = new ExecutableElement[2];
                 /**
                  * Only non-static and non-final fields can be updated

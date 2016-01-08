@@ -4,9 +4,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.lang.model.element.AnnotationMirror;
 import javax.lang.model.element.Element;
 import javax.lang.model.element.ExecutableElement;
 import javax.lang.model.element.Name;
+import javax.lang.model.element.TypeElement;
 import javax.lang.model.element.VariableElement;
 import javax.lang.model.type.TypeKind;
 
@@ -84,5 +86,15 @@ final class ElementUtil {
             CharSequence following = chars.subSequence(1, chars.length());
             return String.valueOf(Character.toUpperCase(first)) + following;
         }
+    }
+
+    static boolean isAnnotationPresent(VariableElement element, String annotationName) {
+        List<? extends AnnotationMirror> annotationMirrors = element.getAnnotationMirrors();
+        for (final AnnotationMirror annotationMirror : annotationMirrors) {
+            if (((TypeElement) annotationMirror.getAnnotationType().asElement()).getQualifiedName().contentEquals(annotationName)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
