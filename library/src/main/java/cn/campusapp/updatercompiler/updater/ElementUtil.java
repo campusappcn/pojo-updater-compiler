@@ -19,7 +19,7 @@ import javax.lang.model.type.TypeKind;
  */
 final class ElementUtil {
     static final Pattern sFIELD_START_WITH_M = Pattern.compile("\\Am(?<name>[A-Z]\\w*)\\Z");
-    static final Pattern sBOOLEAN_FIELD = Pattern.compile("\\Am?(?:Is)?(?<name>\\w+)\\Z");
+    static final Pattern sBOOLEAN_FIELD = Pattern.compile("\\A(?:mIs|is)(?<name>\\w+)\\Z");
 
     private ElementUtil() {
     }
@@ -33,9 +33,9 @@ final class ElementUtil {
      * @return true if both getter and setter are found, otherwise false
      * @throws IllegalArgumentException if getterSetter is null or its length is not 2
      */
-    static boolean findGetterSetter(/*入参*/final VariableElement field,
-                                    /*入参*/final List<ExecutableElement> methods,
-                                    /*出参*/final ExecutableElement[] getterSetter) {
+    static boolean findGetterSetter(/*in*/final VariableElement field,
+                                    /*in*/final List<ExecutableElement> methods,
+                                    /*out*/final ExecutableElement[] getterSetter) {
         if (getterSetter == null || getterSetter.length != 2) {
             throw new IllegalArgumentException("Size of out param getterSetter must be 2");
         }
