@@ -103,17 +103,18 @@ public class UpdaterProcessor extends AbstractProcessor {
                  */
                 if (!fieldModifiers.contains(Modifier.FINAL) && !fieldModifiers.contains(Modifier.STATIC)) {
                     /**
-                     * If both getter and setter of this field are declared, use its getter/setter for updating
-                     */
-                    if (cn.campusapp.updatercompiler.updater.ElementUtil.findGetterSetter(field, methods, getterSetter)) {
-                        updaterGenerator.addProperty(field, getterSetter[0], getterSetter[1], omitNull);
-                    }
-                    /**
                      * If this field is non-protected and non-private, which means 'public' or 'package default', it is updatable
                      */
-                    else if (!fieldModifiers.contains(Modifier.PROTECTED) && !fieldModifiers.contains(Modifier.PRIVATE)) {
+                    if (!fieldModifiers.contains(Modifier.PROTECTED) && !fieldModifiers.contains(Modifier.PRIVATE)) {
                         updaterGenerator.addField(field, omitNull);
                     }
+                    /**
+                     * If both getter and setter of this field are declared, use its getter/setter for updating
+                     */
+                    else if (cn.campusapp.updatercompiler.updater.ElementUtil.findGetterSetter(field, methods, getterSetter)) {
+                        updaterGenerator.addProperty(field, getterSetter[0], getterSetter[1], omitNull);
+                    }
+
                 }
             }
 
