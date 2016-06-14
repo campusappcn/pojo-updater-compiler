@@ -69,6 +69,7 @@ public class ManagerGenerator {
                 "tClass"
         ).build();
 
+        final String returnVariableName = "updater";
         return MethodSpec.methodBuilder("getUpdater")
                 .addAnnotation(AnnotationSpec.builder(SuppressWarnings.class)
                         .addMember("value", "$S", "unchecked")
@@ -77,7 +78,11 @@ public class ManagerGenerator {
                 .addTypeVariable(typeVariableName)
                 .addParameter(parameterSpec)
                 .returns(returnType)
-                .addStatement("return ($T)$N.get($N)", returnType, mapField, parameterSpec)
+                .addStatement("$T $N = ($T)$N.get($N)", returnType, returnVariableName, returnType, mapField, parameterSpec)
+                .beginControlFlow("if ($N == null)", returnVariableName)
+                .addStatement("throw new $T(\"Updater for $N not found\")", RuntimeException.class, parameterSpec)
+                .endControlFlow()
+                .addStatement("return updater")
                 .build();
     }
 

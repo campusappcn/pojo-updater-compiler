@@ -111,7 +111,7 @@ public class UpdaterProcessor extends AbstractProcessor {
                     /**
                      * If both getter and setter of this field are declared, use its getter/setter for updating
                      */
-                    else if (cn.campusapp.updatercompiler.updater.ElementUtil.findGetterSetter(field, methods, getterSetter)) {
+                    else if (ElementUtil.findGetterSetter(field, methods, getterSetter)) {
                         updaterGenerator.addProperty(field, getterSetter[0], getterSetter[1], omitNull);
                     }
 

@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.annotation.Generated;
 import javax.annotation.processing.Filer;
 import javax.annotation.processing.ProcessingEnvironment;
 import javax.lang.model.element.Element;
@@ -102,8 +103,8 @@ public class UpdaterGenerator {
         mIsTopClass = typeElement.getNestingKind() == NestingKind.TOP_LEVEL;
         mIsStatic = typeElement.getModifiers().contains(Modifier.STATIC);
 
-        mUpdaterAnnotation = AnnotationSpec.builder(UpdaterManager.ManagedUpdater.class)
-                .addMember("value", "$T.class", typeElement)
+        mUpdaterAnnotation = AnnotationSpec.builder(Generated.class)
+                .addMember("value", "$N", "cn.campusapp.updatercompiler")
                 .build();
     }
 
