@@ -103,8 +103,8 @@ public class UpdaterGenerator {
         mIsTopClass = typeElement.getNestingKind() == NestingKind.TOP_LEVEL;
         mIsStatic = typeElement.getModifiers().contains(Modifier.STATIC);
 
-        mUpdaterAnnotation = AnnotationSpec.builder(Generated.class)
-                .addMember("value", "$N", "cn.campusapp.updatercompiler")
+        mUpdaterAnnotation = AnnotationSpec.builder(UpdaterManager.ManagedUpdater.class)
+                .addMember("value", "$T.class", typeElement)
                 .build();
     }
 
